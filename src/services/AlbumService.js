@@ -11,6 +11,10 @@ class AlbumService {
   create(data) {
     return http.post("/album", data);
   }
+  //create new question
+  createQuestion(data) {
+    return http.post("/surveyapi/question", data);
+  }
 
   update(id, data) {
     return http.put(`/album/${id}`, data);
