@@ -12,6 +12,8 @@ import AddSong from '@/components/AddSong.vue'
 import Song from '@/components/Song.vue'
 import Test from '@/components/Test.vue'
 import Admin from '@/components/Admin.vue'
+import SurveyManager from '@/components/SurveyManger.vue'
+import AddSurvey from '@/components/AddSurvey.vue'
 const routes =  [
   {
     path: "/edit/:id",
@@ -97,7 +99,7 @@ const routes =  [
     component: Song
   },
   {
-    path: '/test',
+    path: '/test/:id',
     name: 'test',
     component: Test
   },
@@ -105,6 +107,23 @@ const routes =  [
     path: '/admin',
     name: 'admin-view',
     component: Admin
+  },
+  //suvery manager page, after logging in
+  {
+    path: '/surveymanager/:id',
+    name: 'view of survey manager',
+    component: SurveyManager
+  },
+  //new survey
+  {
+    path: '/new-survey/:id',
+    name: 'new survey',
+    component: AddSurvey
+  },
+  {
+    path: '/survey-question/:id',
+    name: 'Add question',
+    component: Test
   }
 ];
 const router = createRouter({

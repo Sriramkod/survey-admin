@@ -1,23 +1,26 @@
 <template>
 <div>
+  <center><h3 class="w3-container w3-blue" style="width: 75%;"> Welcome to Survey-Feed</h3></center>
+   <br>
    <br>
 <div class="w3-card-4">
   <center>
-    <div  class="w3-container w3-blue" style="width: 65%;">
+     
+    <div  class="w3-container w3-green" style="width: 20%;">
 
- <h4> Artist Login</h4>
+ <h4> Survey-Manager Login</h4>
        </div>
 
        <h4><div class="error w3-text-red" v-html="error"></div></h4>
        <br>
-       <h4>Please Provide your Email</h4>
+       <h4>Email Address</h4>
         <form name="album-login-user"
        autocomplete="off">
        <input type="text"  name="email" class="w3-input" style="width: 50%;"  placeholder="Enter email"
     v-model="email"
    />
    <br>
-   <h4>Please Provide your Password</h4>
+   <h4>Password</h4>
    <input  class="w3-input" style="width: 50%;"
           name="password"
           placeholder="Enter password"
@@ -27,7 +30,7 @@
    <br>
    <br>
 </center>
-    <button @click="login" class="w3-btn w3-blue">login</button>
+    <button @click="login" class="w3-btn w3-blue">Proceed</button>
     <br><br>
 </div>
 </div>
@@ -53,7 +56,7 @@ export default {
         })
         console.log(this.email)
         const id = this.email
-        this.$router.push({ path: `/add/${id}` })
+        this.$router.push({ path: `/surveymanager/${id}` })
         // this.$router.push('/add/'+this.email)
         console.log(response.data.token)
         this.error = 'Login sucessfull'

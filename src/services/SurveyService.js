@@ -13,7 +13,7 @@ class AlbumService {
   }
   //create new question
   createQuestion(data) {
-     return http.post("/surveyapi/question", data);
+    return http.post("/surveyapi/question", data);
   }
 
   update(id, data) {
@@ -43,6 +43,9 @@ class AlbumService {
 
   createSong(data) {
     return http.post("/song", data);
+  }
+  createSurvey(data) {
+    return http.post("/surveyapi/survey", data);
   }
   findSongsByAlbumId(id) {
     return http.get(`/songs/${id}`)
