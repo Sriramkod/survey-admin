@@ -15,7 +15,7 @@
   <div class="w3-quarter">
     <p><h4></h4></p>
   </div>
-  <router-link to="/">
+  <router-link :to="'/user-survey/' + this.$route.params.id">
    <div class="w3-quarter w3-card w3-yellow w3-hover-shadow" style="height: 150px;">
     <p><h4>Survey List</h4></p><br>
     <img src="../assets/sicon.png" class="w3-bar-item w3-circle w3-hide-small" style="width:50px">

@@ -14,6 +14,8 @@ import Test from '@/components/Test.vue'
 import Admin from '@/components/Admin.vue'
 import SurveyManager from '@/components/SurveyManger.vue'
 import AddSurvey from '@/components/AddSurvey.vue'
+import UserSurvey from '@/components/UserSurvey.vue'
+import SurveyQuestion from '@/components/SurveyQuestion.vue'
 const routes =  [
   {
     path: "/edit/:id",
@@ -124,6 +126,16 @@ const routes =  [
     path: '/survey-question/:id',
     name: 'Add question',
     component: Test
+  },
+  {
+    path: '/user-survey/:id',
+    name: 'user-survey',
+    component: UserSurvey
+  },
+  {
+    path: '/view-question/:id',
+    name: 'survey-specific-question-details',
+    component: SurveyQuestion
   }
 ];
 const router = createRouter({

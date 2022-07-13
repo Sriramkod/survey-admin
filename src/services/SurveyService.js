@@ -15,7 +15,14 @@ class AlbumService {
   createQuestion(data) {
     return http.post("/surveyapi/question", data);
   }
-
+  // get All Survey for a survey Manager
+  getAllByManager(surveymanager) {
+    return http.get(`/surveyapi/survey/${surveymanager}`)
+  }
+  //get Questions based on survey id
+  getAllBySurveyId(id){
+    return http.get(`/surveyapi/question/survey/${id}`);
+  }
   update(id, data) {
     return http.put(`/album/${id}`, data);
   }
