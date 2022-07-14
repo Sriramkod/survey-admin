@@ -3,33 +3,31 @@
     <center><h3 class="w3-container w3-blue" style="width: 75%;"> Survey-Feed</h3></center>
 </div>
   <div id="visa">
-    <h5>Hello Survey Manager , below are the questions in your survey: </h5>
-    <router-link :to="'/edit-this-survey/' + this.$route.params.id">
-    <button class="w3-btn w3-blue">Click Here to edit this...</button>
-    </router-link>
     <form>
       <br>
       <div class="w3-panel w3-topbar w3-bottombar w3-border-red w3-pale-green" style="width: 120%"
       v-for="(applicant, counter) in applicants" 
       v-bind:key="counter">
+        <span @click="deleteVisa(counter)">x</span>
         <label for="duration">{{counter+1}}. Normal Question:</label>
-        <input type="text" v-model="applicant.previous" :id="'one' + counter" placeholder="Enter the Question" disabled>
+        <input type="text" v-model="applicant.previous" :id="'one' + counter" placeholder="Enter the Question" required>
         <br><br><br> 
       </div>
       <div class="w3-panel w3-topbar w3-bottombar w3-border-green w3-sand" style="width: 120%"
       v-for="(applicant, counter) in radioapplicants"
       v-bind:key="counter">
+        <span @click="deleteRadio(counter)">x</span>
         <label for="rduration">{{counter+1}}. Radio Question:</label>
-        <input type="text" v-model="applicant.previous1" :id="'radioone' + counter" disabled>
+        <input type="text" v-model="applicant.previous1" :id="'radioone' + counter" required>
         <label for="rduration">Option 1:</label>
-        <input type="text" v-model="applicant.previous2" :id="'radiotwo' + counter" disabled>
+        <input type="text" v-model="applicant.previous2" :id="'radiotwo' + counter" required>
         <label for="rduration">Option 2:</label>
-        <input type="text" v-model="applicant.previous3" :id="'radiothree' + counter" disabled>
+        <input type="text" v-model="applicant.previous3" :id="'radiothree' + counter" required>
         <label for="rduration">Option 3:</label>
-        <input type="text" v-model="applicant.previous4" :id="'radiofour' + counter" disabled>
+        <input type="text" v-model="applicant.previous4" :id="'radiofour' + counter" required>
         <br><br><br> 
       </div>
-      
+      <button @click="getAll" class="w3-btn w3-blue">Submit</button>
     </form>
 </div>
 </template>
@@ -76,7 +74,6 @@ export default {
 
             if(this.albums[i].type=="Normal")
             {
-              console.log(this.albums[i].userid);
               this.applicants.push({
                       previous:this.albums[i].description,
                       expiration: this.albums[i].description
