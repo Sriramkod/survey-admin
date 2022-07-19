@@ -1,12 +1,9 @@
 <template>
+<router-view />
 <div class="w3-container">
     <center><h3 class="w3-container w3-blue" style="width: 75%;"> Survey-Feed</h3></center>
 </div>
   <div id="visa">
-    <h5>Hello Survey Manager , below are the questions in your survey: </h5>
-    <router-link :to="'/edit-this-survey/' + this.$route.params.id">
-    <button class="w3-btn w3-blue">Click Here to edit this...</button>
-    </router-link>
     <form class="w3-container">
       <br>
       <center>
@@ -14,25 +11,31 @@
       style="width: 80%"
       v-for="(applicant, counter) in applicants" 
       v-bind:key="counter">
-        <label for="duration">{{counter+1}}. Normal Question:</label>
-        <input type="text" v-model="applicant.previous" :id="'one' + counter" placeholder="Enter the Question" disabled>
+        <label for="duration">{{counter+1}}. {{applicant.previous}}</label>
+        <span></span>
+        <input type="text" v-model="applicant.previous" :id="'normalq' + counter" disabled>
+        <br><br>
+        <input type="text"  :id="'normal' + counter" placeholder="Your Response" required>
         <br><br><br> 
       </div>
-      <div class="w3-ul w3-card-4"
-      style="width: 80%"
+      
+      <div class="w3-ul w3-card-4" style="width: 80%"
       v-for="(applicant, counter) in radioapplicants"
       v-bind:key="counter">
+       
         <label for="rduration">{{counter+1}}. Radio Question:</label>
-        <input type="text" v-model="applicant.previous1" :id="'radioone' + counter" disabled>
-        <label for="rduration">Option 1:</label>
-        <input type="text" v-model="applicant.previous2" :id="'radiotwo' + counter" disabled>
-        <label for="rduration">Option 2:</label>
-        <input type="text" v-model="applicant.previous3" :id="'radiothree' + counter" disabled>
-        <label for="rduration">Option 3:</label>
-        <input type="text" v-model="applicant.previous4" :id="'radiofour' + counter" disabled>
-        <br><br><br> 
+        <input type="text" :value="applicant.previous1" :name="name" :id="'radiotwo' + counter" disabled/> 
+        <br>
+         <input type="radio" id="age1" class="w3-input" :name="'radiotwo' + counter" :value="applicant.previous2" required>
+  <label for="age1">{{applicant.previous2}}</label>
+  <input type="radio" id="age2" :name="'radiotwo' + counter" :value="applicant.previous3" required>
+  <label for="age2">{{applicant.previous3}}</label><br>  
+  <input type="radio" id="age3" :name="'radiotwo' + counter" :value="applicant.previous4" required>
+  <label for="age3">{{applicant.previous4}}</label><br><br> 
       </div>
       </center>
+      <button  @click="getAll" class="w3-btn w3-blue">Submit</button>
+     
     </form>
 </div>
 </template>
@@ -40,6 +43,7 @@
 <script>
 import AlbumService from '../services/AlbumService'
 import SurveyService from '../services/SurveyService'
+
 export default {
   name: 'albums-list',
   data () {
@@ -79,7 +83,6 @@ export default {
 
             if(this.albums[i].type=="Normal")
             {
-              console.log(this.albums[i].userid);
               this.applicants.push({
                       previous:this.albums[i].description,
                       expiration: this.albums[i].description
@@ -103,6 +106,108 @@ export default {
           console.log(e)
         })
     },
+    getAll() {
+  
+// var c =  document.getElementsByName("age").value;
+// console.log("Value is");console.log(c);
+for (let i = 0; i < this.applicants.length; i++) {
+      let k = 'normalq'+i;
+      let ans = 'normal'+i;
+       var desc = document.getElementById(k).value;
+       var ansv = document.getElementById(ans).value;
+      console.log(desc);
+      var dataquestion = {
+        surveyid: this.albums[0].surveyid, 
+        userid: this.albums[0].userid,
+        description: desc,
+        type: "Normal",
+        options: "none",
+        answer: ansv
+      }
+      
+      SurveyService.createAnswer(dataquestion)
+        .then(response => {
+          // this.submitted = true
+          // this.album.id = response.data.id
+          console.log(response.data)
+        })
+        .catch(e => {
+          console.log(e)
+        })
+}
+for(let j=0;j<this.radioapplicants.length;j++){
+   
+      let age = 'radiotwo' + j;
+var ele = document.getElementsByName(age);
+console.log("name:");
+              console.log(ele);
+                    for(let i = 0; i < ele.length; i++) {
+                if(ele[i].checked){
+                console.log("Value is");
+                console.log(ele[i].value);
+                 let questionname =  document.getElementById(age).value;
+            var dataquestion = {
+        surveyid: this.albums[0].surveyid, 
+        userid: this.albums[0].userid,
+        description: questionname,
+        type: "Radio",
+        options: "none",
+        answer: ele[i].value
+      }
+      
+      SurveyService.createAnswer(dataquestion)
+        .then(response => {
+          // this.submitted = true
+          // this.album.id = response.data.id
+          console.log(response.data)
+        })
+        .catch(e => {
+          console.log(e)
+        })
+                }
+      //   }
+      //       }
+                    }
+    }
+//     for (let i = 0; i < c; i++) {
+//       let k = 'one'+i;
+//       var desc = document.getElementById(k).value;
+//       console.log();
+//       var dataquestion = {
+//          surveyid: this.$route.params.id, 
+//         userid: this.$route.params.user,
+//         description: desc,
+//         type: "Normal",
+//         options: "none"
+//       }
+      
+//       AlbumService.createQuestion(dataquestion)
+//         .then(response => {
+//           // this.submitted = true
+//           // this.album.id = response.data.id
+//          // 
+//           console.log(response.data)
+//         })
+//         .catch(e => {
+//           console.log(e)
+//         })
+// }
+//  for (let i = 0; i < rc; i++) {
+//       let k = 'radioone'+i;
+//       var desc = document.getElementById(k).value;
+//       let o1 = 'radiotwo'+i;
+//       var op1 = document.getElementById(o1).value;
+//       let o2 = 'radiothree'+i;
+//       var op2 = document.getElementById(o2).value;
+//       let o3 = 'radiofour'+i;
+//       var op3 = document.getElementById(o3).value;
+//        console.log("User Detals")
+//       console.log(this.$route.params.user)
+      
+// }
+
+this.$router.push({ path: `/surveymanager/${this.albums[0].userid}` })
+},
 
     refreshList () {
       this.currentAlbum = null

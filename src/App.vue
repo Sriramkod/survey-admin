@@ -1,12 +1,12 @@
 <template>
   <div id="app">
     
-    <v-app>
+    <!-- <v-app>
 
-   <router-view/>
-    </v-app>
+   <router-view></router-view>
+    </v-app> -->
     <!-- <img src="./assets/logo.png"> -->
-    
+   <router-view/> 
 
   </div>
 </template>

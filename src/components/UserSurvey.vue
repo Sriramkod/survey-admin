@@ -1,7 +1,7 @@
 <template>
 
 <div class="list row">
-    <div class="col-md-6">
+    <div>
       <ul class="w3-ul w3-card-4" style="width:500px">
          <li class="w3-bar" :class="{ active: index == currentIndex }"
           v-for="(album, index) in albums"
@@ -12,8 +12,9 @@
 
       <img src="../assets/sicon.png" class="w3-bar-item w3-circle w3-hide-small" style="width:80px">
       <div class="w3-bar-item">
-        <span class="w3-large">Survey: <span style="color:blue;">{{ album.title }}</span></span><br>
-        <span class="w3-large">About Survey: {{ album.description }}</span>
+        <span class="w3-large w3-bar-item" style="width:980px">Survey: {{ album.title }}</span><br>
+      
+       <span class="w3-large w3-bar-item" style="width:980px">About Survey: {{ album.description }}</span>
       </div>
     </li>
       </ul>
@@ -31,7 +32,7 @@
 <div class="modal-content">
     <span class="close">&times;</span>
 <div v-if="currentAlbum" class="w3-card w3-aqua">
-        <h4>Survey</h4>
+        <h4>Survey Feed</h4>
         <div>
           <label><strong>Title:</strong></label> {{ currentAlbum.title }}
         </div>
@@ -43,12 +44,11 @@
         <div class="row">
         <div class="column">&nbsp;&nbsp;&nbsp;&nbsp;</div>
         <div class="column">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        <!--
         <div class="column">
         <router-link :to="'/albums/' + currentAlbum.id"  class="w3-button w3-red">Edit</router-link>
         &nbsp;&nbsp;</div>
-        <div class="column">
-        <router-link :to="'/addsong/' + currentAlbum.id"  class="w3-button w3-green">Add new Song</router-link>
-        &nbsp;&nbsp;</div>
+       -->
         <div class="column">
         <router-link :to="'/view-question/' + currentAlbum.id"  class="w3-button w3-green">View Survey Form</router-link>
         </div>
@@ -169,7 +169,7 @@ window.onclick = function(event) {
 @import "https://www.w3schools.com/w3css/4/w3.css";
 .list {
   text-align: left;
-  max-width: 750px;
+  max-width: 1000px;
   margin: auto;
 }
 .modal {

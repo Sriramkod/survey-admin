@@ -17,6 +17,7 @@ import AddSurvey from '@/components/AddSurvey.vue'
 import UserSurvey from '@/components/UserSurvey.vue'
 import SurveyQuestion from '@/components/SurveyQuestion.vue'
 import EditSurveyQuestion from '@/components/EditSurveyQuestion.vue'
+import SubmitAnswer from '@/components/SubmitAnswer.vue'
 const routes =  [
   {
     path: "/edit/:id",
@@ -50,7 +51,7 @@ const routes =  [
   {
     path: '/',
     name: 'root',
-    component: HelloWorld
+    component: Login
   },
   {
     path: '/register',
@@ -58,7 +59,7 @@ const routes =  [
     component: Register
   },
   {
-    path: '/login',
+    path: '/login/',
     name: 'login',
     component: Login
   },
@@ -143,6 +144,11 @@ const routes =  [
     path: '/edit-this-survey/:id',
     name: 'survey-edit-specific-question',
     component: EditSurveyQuestion
+  },
+  {
+    path: '/survey-feed/:id',
+    name: 'survey-feed-specific-survey',
+    component: SubmitAnswer
   }
 ];
 const router = createRouter({

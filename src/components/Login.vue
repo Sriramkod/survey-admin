@@ -14,9 +14,9 @@
        <h4><div class="error w3-text-red" v-html="error"></div></h4>
        <br>
        <h4>Email Address</h4>
-        <form name="album-login-user"
+        <form name="album-login-user" class="w3-container"
        autocomplete="off">
-       <input type="text"  name="email" class="w3-input" style="width: 50%;"  placeholder="Enter email"
+       <input type="text" class="w3-input" name="email"  style="width: 50%;"  placeholder="Enter email"
     v-model="email"
    />
    <br>
