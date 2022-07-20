@@ -2,7 +2,7 @@
 <div class="w3-container">
     <center><h3 class="w3-container w3-blue" style="width: 75%;"> Survey-Feed</h3></center>
 </div>
-  <div id="visa">
+  <div id="visa" v-if="this.albums.length">
     <h5>Hello Survey Manager , Please proceed to edit the below survey: </h5>
     <form class="w3-container">
       <br>
@@ -13,6 +13,10 @@
       v-bind:key="counter">
         
               <br><br>
+              
+        <button @click.native="deleteSpecificQuestion(applicant.id)" class="w3-btn w3-red">Delete</button>
+        <br>
+      
         <input type="text" v-model="applicant.previous" :id="'one' + counter" placeholder="Enter the Question" required>
         <br><br><br> 
       </div>
@@ -22,6 +26,8 @@
       v-for="(applicant, counter) in radioapplicants"
       v-bind:key="counter">
               <br><br>
+       <button @click.native="deleteSpecificQuestion(applicant.id)" class="w3-btn w3-red">Delete</button>
+        <br>
         <input type="text" v-model="applicant.previous1" :id="'radioone' + counter" required>
         <label for="rduration">Option 1:</label>
         <input type="text" v-model="applicant.previous2" :id="'radiotwo' + counter" required>
@@ -35,6 +41,12 @@
       </center>
       <button @click="getAll" class="w3-btn w3-blue">Submit</button>
     </form>
+</div>
+<div id="visa" v-if="this.albums.length==0">
+<h5>Hello Survey Manager , this an empty survey... </h5>
+<router-link :to="{ name: 'login'}">
+      <button class="w3-btn w3-red" >please login and add questions</button>
+      </router-link>
 </div>
 </template>
 
@@ -53,7 +65,8 @@ export default {
       applicants:[
        {
       previous: '',
-      expiration:''
+      expiration:'',
+      id:''
        }
      ],
      radioapplicants:[
@@ -61,7 +74,8 @@ export default {
         previous1: '',
         previous2: '',
         previous3: '',
-        previous4: ''
+        previous4: '',
+        id:''
       }
      ],
      submitted: false
@@ -73,18 +87,26 @@ export default {
       SurveyService.getAllBySurveyId(id)
         .then(response => {
           this.albums = response.data
-          this.currentTutorial = response.data
+          this.currentTutorial = response.data;
+           if(this.albums.length==0)
+          {
+            this.applicants.splice(0,1);
+          this.radioapplicants.splice(0,1);
+          return;
+          }
           this.userid = this.albums[0].userid;
           console.log(response.data)
           console.log(this.albums[0].description)
           console.log(this.albums.length)
+         
           for (let i = 0; i < this.albums.length; i++) {
 
             if(this.albums[i].type=="Normal")
             {
               this.applicants.push({
                       previous:this.albums[i].description,
-                      expiration: this.albums[i].description
+                      expiration: this.albums[i].description,
+                      id:this.albums[i].id
                 })
             }
             else if(this.albums[i].type=="Radio")
@@ -94,7 +116,8 @@ export default {
                     previous1:this.albums[i].description,
                     previous2: match[0],
                     previous3: match[1],
-                    previous4: match[2]
+                    previous4: match[2],
+                    id:this.albums[i].id
                 })
             }
           }
@@ -109,6 +132,20 @@ export default {
     refreshList () {
       this.currentAlbum = null
       this.currentIndex = -1
+    },
+
+
+    deleteSpecificQuestion (id) {
+            SurveyService.deleteQuestions(id)
+        .then(response => {
+          console.log(response.data)
+          
+        })
+        .catch(e => {
+          console.log(e)
+        })
+        
+this.$router.push({ path: `/edit-this-survey/${this.$route.params.id}` })
     },
     getAll () {
 

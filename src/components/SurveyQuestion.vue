@@ -2,7 +2,7 @@
 <div class="w3-container">
     <center><h3 class="w3-container w3-blue" style="width: 75%;"> Survey-Feed</h3></center>
 </div>
-  <div id="visa">
+  <div id="visa" v-if="this.albums.length">
     <h5>Hello Survey Manager , below are the questions in your survey: </h5>
     <router-link :to="'/edit-this-survey/' + this.$route.params.id">
     <button class="w3-btn w3-blue">Click Here to edit this...</button>
@@ -34,6 +34,12 @@
       </div>
       </center>
     </form>
+</div>
+<div v-if="this.albums.length==0"> 
+<h5>Hello Survey Manager , this an empty survey... </h5>
+  <!-- <router-link :to="{ name: 'test', params: { id: this.$route.params.id, user: this.$route.params.id }}">
+      <button class="w3-btn w3-red" >Add Questions to the Survey</button>
+      </router-link> -->
 </div>
 </template>
 
@@ -71,7 +77,13 @@ export default {
       SurveyService.getAllBySurveyId(id)
         .then(response => {
           this.albums = response.data
-          this.currentTutorial = response.data
+          this.currentTutorial = response.data;
+          if(this.albums.length==0)
+          {
+            this.applicants.splice(0,1);
+          this.radioapplicants.splice(0,1);
+          return;
+          }
           console.log(response.data)
           console.log(this.albums[0].description)
           console.log(this.albums.length)
