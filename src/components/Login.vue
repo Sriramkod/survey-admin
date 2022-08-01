@@ -1,12 +1,12 @@
 <template>
 <div>
-  <center><h3 class="w3-container w3-blue" style="width: 75%;"> Welcome to Survey-Feed</h3></center>
+  <center><h3 class="w3-container w3-green" style="width: 75%;"> Welcome to Survey-Feed</h3></center>
    <br>
    <br>
 <div class="w3-card-4">
   <center>
      
-    <div  class="w3-container w3-green" style="width: 20%;">
+    <div  class="w3-container w3-blue" style="width: 20%;">
 
  <h4> Survey-Manager Login</h4>
        </div>

@@ -14,7 +14,7 @@
         
               <br><br>
               
-        <button @click.native="deleteSpecificQuestion(applicant.id)" class="w3-btn w3-red">Delete</button>
+        <router-link @click.native="deleteSpecificQuestion(applicant.id,counter)" to="/login" class="w3-btn w3-red">Delete</router-link>
         <br>
       
         <input type="text" v-model="applicant.previous" :id="'one' + counter" placeholder="Enter the Question" required>
@@ -26,7 +26,7 @@
       v-for="(applicant, counter) in radioapplicants"
       v-bind:key="counter">
               <br><br>
-       <button @click.native="deleteSpecificQuestion(applicant.id)" class="w3-btn w3-red">Delete</button>
+      <router-link @click.native="deleteSpecificQuestionr(applicant.id,counter)" to="/login" class="w3-btn w3-red">Delete</router-link>
         <br>
         <input type="text" v-model="applicant.previous1" :id="'radioone' + counter" required>
         <label for="rduration">Option 1:</label>
@@ -135,7 +135,23 @@ export default {
     },
 
 
-    deleteSpecificQuestion (id) {
+    deleteSpecificQuestion (id,counter) {
+       this.applicants.splice(counter,1);
+       this.albums.length=this.albums.length-1;
+            SurveyService.deleteQuestions(id)
+        .then(response => {
+          console.log(response.data)
+          
+        })
+        .catch(e => {
+          console.log(e)
+        })
+        
+this.$router.push({ path: `/edit-this-survey/${this.$route.params.id}` })
+    },
+    deleteSpecificQuestionr (id,counter) {
+       this.radioapplicants.splice(counter,1);
+       this.albums.length=this.albums.length-1;
             SurveyService.deleteQuestions(id)
         .then(response => {
           console.log(response.data)
